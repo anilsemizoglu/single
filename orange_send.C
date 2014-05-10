@@ -133,7 +133,9 @@ int ScanChain( TChain* chain, char* suffix = "", bool ismc = true, bool fast = t
       float mt2 = MT2(fmet, fmetphi, lr_p4() , fakeLep_p4); // lr stands for "real" lepton 
 
       // Calculate the original MT
-      float mt  = sqrt(2*lr_p4().Pt()* met()*(1 - cos(lr_p4().Phi() - metPhi())));
+      float dphi = lr_p4().Phi() - metPhi();                                             
+      	  if(dphi > 3.1415) dphi = 6.28 - dphi;  
+      float mt  = sqrt( 2*lr_p4().Pt()* met()*(1 - cos(dphi)));
 
       //// The rest are only histograms filling 
 
