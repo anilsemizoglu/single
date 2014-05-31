@@ -103,26 +103,48 @@ int jet_h_bin = 10;
 	ttbar_lep_pt->SetLineWidth(4);
 
 ////MUONS////
-
-
 	TH1F *mt2_h_data_mu = new TH1F("mt2_data_mu_","MT2_data_mu",mt2_n_bin,0,mt2_h_bin);
 	TH1F  *mt_h_data_mu = new  TH1F("mt_data_mu_", "MT_data_mu",mt_n_bin,0,mt_h_bin);
 	TH1F   *met_data_mu = new TH1F("met_data_mu_","met_data_mu",met_n_bin,0,met_h_bin);
 	TH1F   *jets_data_mu= new TH1F("jets_data_mu_","Jets_data_mu",jet_n_bin,0,jet_h_bin);
+	TH1F   *data_w_pt_mu = new     TH1F("data_w_pt_mu_","data_W_pt_mu",60,0,mt_h_bin);
 	TH1F   *data_lep_pt_mu = new     TH1F("data_lep_pt_mu_","data_Lep_pt_mu",60,0,mt_h_bin);
 
 	TH1F *mt2_h_ttbar_mu = new TH1F("mt2_ttbar_mu_","MT2_ttbar_mu",mt2_n_bin,0,mt2_h_bin);
 	TH1F  *mt_h_ttbar_mu = new  TH1F("mt_ttbar_mu_", "MT_ttbar_mu",mt_n_bin,0,mt_h_bin);
 	TH1F   *met_ttbar_mu = new TH1F("met_ttbar_mu_","met_ttbar_mu",met_n_bin,0,met_h_bin);
 	TH1F   *jets_ttbar_mu  = new TH1F("jets_ttbar_mu_","Jets_ttbar_mu",jet_n_bin,0,jet_h_bin);
+	TH1F   *ttbar_w_pt_mu = new     TH1F("ttbar_w_pt_mu_","ttbar_W_pt_mu",60,0,mt_h_bin);
 	TH1F   *ttbar_lep_pt_mu = new     TH1F("ttbar_lep_pt_mu_","ttbar_Lep_pt_mu",60,0,mt_h_bin);
 
 	TH1F *mt2_h_wjets_mu = new TH1F("mt2_wjets_mu_","MT2_wjets_mu",mt2_n_bin,0,mt2_h_bin);
 	TH1F  *mt_h_wjets_mu = new  TH1F("mt_wjets_mu_", "MT_wjets_mu",mt_n_bin,0,mt_h_bin);
 	TH1F   *met_wjets_mu = new TH1F("met_wjets_mu_","met_wjets_mu",met_n_bin,0,met_h_bin);
 	TH1F   *jets_wjets_mu  = new TH1F("jets_wjets_mu_","Jets_wjets_mu",jet_n_bin,0,jet_h_bin);
+	TH1F   *wjets_w_pt_mu = new     TH1F("wjets_w_pt_mu_","wjets_W_pt_mu",60,0,mt_h_bin);
 	TH1F   *wjets_lep_pt_mu = new     TH1F("wjets_lep_pt_mu_","wjets_Lep_pt_mu",60,0,mt_h_bin);
 
+////ELECTRONS////
+	TH1F *mt2_h_data_el = new TH1F("mt2_data_el_","MT2_data_el",mt2_n_bin,0,mt2_h_bin);
+	TH1F  *mt_h_data_el = new  TH1F("mt_data_el_", "MT_data_el",mt_n_bin,0,mt_h_bin);
+	TH1F   *met_data_el = new TH1F("met_data_el_","met_data_el",met_n_bin,0,met_h_bin);
+	TH1F   *jets_data_el= new TH1F("jets_data_el_","Jets_data_el",jet_n_bin,0,jet_h_bin);
+	TH1F   *data_w_pt_el = new     TH1F("data_w_pt_el_","data_W_pt_el",60,0,mt_h_bin);
+	TH1F   *data_lep_pt_el = new     TH1F("data_lep_pt_el_","data_Lep_pt_el",60,0,mt_h_bin);
+
+	TH1F *mt2_h_ttbar_el = new TH1F("mt2_ttbar_el_","MT2_ttbar_el",mt2_n_bin,0,mt2_h_bin);
+	TH1F  *mt_h_ttbar_el = new  TH1F("mt_ttbar_el_", "MT_ttbar_el",mt_n_bin,0,mt_h_bin);
+	TH1F   *met_ttbar_el = new TH1F("met_ttbar_el_","met_ttbar_el",met_n_bin,0,met_h_bin);
+	TH1F   *jets_ttbar_el  = new TH1F("jets_ttbar_el_","Jets_ttbar_el",jet_n_bin,0,jet_h_bin);
+	TH1F   *ttbar_w_pt_el = new     TH1F("ttbar_w_pt_el_","ttbar_W_pt_el",60,0,mt_h_bin);
+	TH1F   *ttbar_lep_pt_el = new     TH1F("ttbar_lep_pt_el_","ttbar_Lep_pt_el",60,0,mt_h_bin);
+
+	TH1F *mt2_h_wjets_el = new TH1F("mt2_wjets_el_","MT2_wjets_el",mt2_n_bin,0,mt2_h_bin);
+	TH1F  *mt_h_wjets_el = new  TH1F("mt_wjets_el_", "MT_wjets_el",mt_n_bin,0,mt_h_bin);
+	TH1F   *met_wjets_el = new TH1F("met_wjets_el_","met_wjets_el",met_n_bin,0,met_h_bin);
+	TH1F   *jets_wjets_el  = new TH1F("jets_wjets_el_","Jets_wjets_el",jet_n_bin,0,jet_h_bin);
+	TH1F   *wjets_w_pt_el = new     TH1F("wjets_w_pt_el_","wjets_W_pt_el",60,0,mt_h_bin);
+	TH1F   *wjets_lep_pt_el = new     TH1F("wjets_lep_pt_el_","wjets_Lep_pt_el",60,0,mt_h_bin);
 /*
   TFile* f1 = new TFile("/home/users/sanil/single/may15hists/data_w_pt.root");
   TH1F* wp_dist   = (TH1F*) f1->Get("w_pt_"); // 
@@ -241,8 +263,12 @@ float mt2_0_counter = 0, //0 bin counter
       cmetx -= shiftx;
       cmety -= shifty;
 
-      float cmet = sqrt( cmetx*cmetx + cmety*cmety ); // cmet == corrected met
-      float cmetphi = atan2( mety , metx );
+	//problem with this metPhi modulation correction right now
+	//keep using cmet, too lazy to change all the variables
+	float cmet = met();
+     	float cmetphi = metPhi();
+	 //float cmetphi = atan2( mety , metx );
+      //float cmet = sqrt( cmetx*cmetx + cmety*cmety ); // cmet == corrected met
 LorentzVector met_vec;
 met_vec.SetPxPyPzE(metx,mety,0,0);
 
@@ -253,6 +279,8 @@ float w_x = sqrt ( metx*metx + lepx*lepx );
 float w_y = sqrt ( mety*mety + lepy*lepy );
 
 float w_pt_ = sqrt (w_x*w_x + w_y*w_y); 
+
+
 //jet looper
       for (unsigned int k = 0; k < jets_p4().size(); k++){
         if (jets_p4().at(k).pt()*jets_p4Correction().at(k) < 30) continue;
@@ -290,6 +318,9 @@ met_data->Fill(cmet);
 	if (abs(lr_id()) == 13){
 met_data_mu->Fill(cmet);
 	}
+	if (abs(lr_id()) == 11){
+met_data_el->Fill(cmet);
+	}
 }
 
 else if(file_count == 2){
@@ -297,12 +328,18 @@ met_ttbar->Fill(cmet,scale_1fb()*lepton_weight*5.2);
 	if (abs(lr_id()) == 13){
 met_ttbar_mu->Fill(cmet,scale_1fb()*lepton_weight*5.2);
 	}
+	if (abs(lr_id()) == 11){
+met_ttbar_el->Fill(cmet,scale_1fb()*lepton_weight*5.2);
+	}
 }
 
 else if(file_count == 3){
 met_wjets->Fill(cmet,scale_1fb()*lepton_weight*5.2);
 	if (abs(lr_id()) == 13){
 met_wjets_mu->Fill(cmet,scale_1fb()*lepton_weight*5.2);
+	}
+	if (abs(lr_id()) == 11){
+met_wjets_el->Fill(cmet,scale_1fb()*lepton_weight*5.2);
 	}
 }
 /*
@@ -479,10 +516,16 @@ if (abs(lr_id()) == 13){
 	mt_h_data_mu->Fill(MT);
 	jets_data_mu->Fill(nJets);
 	}
+if (abs(lr_id()) == 11){
+	data_lep_pt_el->Fill(lep_pt);
+	mt2_h_data_el->Fill(mt2_event);
+	mt_h_data_el->Fill(MT);
+	jets_data_el->Fill(nJets);
+	}
 }
 //TTBAR
 else if(file_count == 2){
-totalEvents+=1*lepton_weight;
+totalEvents+=1*lepton_weight*scale_1fb()*5.2;
 	ttbar_w_pt->Fill(w_pt_,scale_1fb()*lepton_weight*5.2);
 	ttbar_lep_pt->Fill(lep_pt,scale_1fb()*lepton_weight*5.2);
 	mt2_h_ttbar->Fill(mt2_event,scale_1fb()*lepton_weight*5.2);
@@ -494,10 +537,16 @@ if (abs(lr_id()) == 13){
 	mt_h_ttbar_mu->Fill(MT,scale_1fb()*lepton_weight*5.2);
 	jets_ttbar_mu->Fill(nJets,scale_1fb()*lepton_weight*5.2);
 	}
+if (abs(lr_id()) == 11){
+	ttbar_lep_pt_el->Fill(lep_pt,scale_1fb()*lepton_weight*5.2);
+	mt2_h_ttbar_el->Fill(mt2_event,scale_1fb()*lepton_weight*5.2);
+	mt_h_ttbar_el->Fill(MT,scale_1fb()*lepton_weight*5.2);
+	jets_ttbar_el->Fill(nJets,scale_1fb()*lepton_weight*5.2);
+	}
 }
 //WJETS
 else if(file_count == 3){
-totalEvents+=1*lepton_weight;
+totalEvents+=1*lepton_weight*scale_1fb()*5.2;
 	wjets_w_pt ->Fill(w_pt_,scale_1fb()*lepton_weight*5.2);	
 	wjets_lep_pt ->Fill(lep_pt,scale_1fb()*lepton_weight*5.2);	
 	mt2_h_wjets->Fill(mt2_event,scale_1fb()*lepton_weight*5.2);
@@ -508,6 +557,12 @@ if (abs(lr_id()) == 13){
 	mt2_h_wjets_mu->Fill(mt2_event,scale_1fb()*lepton_weight*5.2);
 	mt_h_wjets_mu->Fill(MT,scale_1fb()*lepton_weight*5.2);
 	jets_wjets_mu->Fill(nJets,scale_1fb()*lepton_weight*5.2);
+	}
+if (abs(lr_id()) == 11){
+	wjets_lep_pt_el->Fill(lep_pt,scale_1fb()*lepton_weight*5.2);
+	mt2_h_wjets_el->Fill(mt2_event,scale_1fb()*lepton_weight*5.2);
+	mt_h_wjets_el->Fill(MT,scale_1fb()*lepton_weight*5.2);
+	jets_wjets_el->Fill(nJets,scale_1fb()*lepton_weight*5.2);
 	}
 }
 	/////FILL END //////
@@ -522,12 +577,21 @@ if(file_count == 1){
 	jets_data->Write();
 	data_w_pt->Write();
 	data_lep_pt->Write();
-	data_lep_pt_mu->Write();
 
+	data_lep_pt_mu->Write();
 	mt2_h_data_mu->Write();
 	mt_h_data_mu->Write();
 	met_data_mu->Write();
+	data_w_pt_mu->Write();
 	jets_data_mu->Write();
+
+	data_lep_pt_el->Write();
+	mt2_h_data_el->Write();
+	mt_h_data_el->Write();
+	met_data_el->Write();
+	data_w_pt_el->Write();
+	jets_data_el->Write();
+
 	//cout << "DATA mt2 tail:    " << mt2tailCounter << endl;
 	cout << endl;
 	cout << "DATA totalEvents:    " << totalEvents << endl;
@@ -537,20 +601,29 @@ if(file_count == 1){
 else if(file_count == 2){
     TFile* fout = new TFile(Form("/home/users/sanil/single/%shists/ttbar_sl5_bv_lep30.root",date),"RECREATE");
 	mt2_h_ttbar->Write();
-	 mt_h_ttbar->Write();
-	  met_ttbar->Write();
+	mt_h_ttbar->Write();
+	met_ttbar->Write();
 	jets_ttbar->Write();
 	ttbar_w_pt->Write();
 	ttbar_lep_pt->Write();
-	ttbar_lep_pt_mu->Write();
 
+
+	ttbar_lep_pt_mu->Write();
 	mt2_h_ttbar_mu->Write();
-	 mt_h_ttbar_mu->Write();
-	  met_ttbar_mu->Write();
+	mt_h_ttbar_mu->Write();
+	met_ttbar_mu->Write();
+	ttbar_w_pt_mu->Write();
 	jets_ttbar_mu->Write();
+
+	ttbar_lep_pt_el->Write();
+	mt2_h_ttbar_el->Write();
+	mt_h_ttbar_el->Write();
+	met_ttbar_el->Write();
+	ttbar_w_pt_el->Write();
+	jets_ttbar_el->Write();
 	//cout << "ttbar mt2 tail: " << mt2tailCounter*scale_1fb()*lepton_weight*5.2 << endl;
 	cout << endl;
-	cout << "ttbar totalEvents:    " << totalEvents*scale_1fb()*5.2 << endl;
+	cout << "ttbar totalEvents:    " << totalEvents << endl;
 	cout << endl;
   fout->Close();
 }
@@ -558,20 +631,28 @@ else if(file_count == 3){
 	//TCanvas *c75 = new TCanvas("c75","c75");
     TFile* fout = new TFile(Form("/home/users/sanil/single/%shists/wjets_sl5_bv_lep30.root",date),"RECREATE");
 	mt2_h_wjets->Write();
-	 mt_h_wjets->Write();
-	  met_wjets->Write();
+	mt_h_wjets->Write();
+	met_wjets->Write();
 	jets_wjets->Write();
 	wjets_w_pt->Write();
 	wjets_lep_pt->Write();
-	wjets_lep_pt_mu->Write();
 
+	wjets_lep_pt_mu->Write();
 	mt2_h_wjets_mu->Write();
-	 mt_h_wjets_mu->Write();
-	  met_wjets_mu->Write();
+	mt_h_wjets_mu->Write();
+	met_wjets_mu->Write();
+	wjets_w_pt_mu->Write();
 	jets_wjets_mu->Write();
+
+	wjets_lep_pt_el->Write();
+	mt2_h_wjets_el->Write();
+	mt_h_wjets_el->Write();
+	met_wjets_el->Write();
+	wjets_w_pt_el->Write();
+	jets_wjets_el->Write();
 	//cout << "wjets mt2 tail: " << mt2tailCounter*scale_1fb()*lepton_weight*5.2 << endl;
 	cout << endl;
-	cout << "wjets totalEvents:    " << totalEvents*scale_1fb()*5.2 << endl;
+	cout << "wjets totalEvents:    " << totalEvents << endl;
 	cout << endl;
   fout->Close();
 }
@@ -585,6 +666,7 @@ if(file_count == 1){
 ofstream file_d(Form("/home/users/sanil/single/%shists/lep30data_mt2_bin.txt",date));
 	if(!file_d.is_open()){return 0;}
 	if( file_d.is_open()){
+file_d << "total DATA events: " << totalEvents << endl; 
 file_d << "starts with 0 < MT2 <= 10, and goes on increments of 10 geV; " << endl;
 file_d << mt2_0_counter   << endl;
 file_d << mt2_10_counter  << endl;
@@ -615,6 +697,7 @@ else if (file_count == 3){
 ofstream file_w(Form("/home/users/sanil/single/%shists/lep30wjets_mt2_bin.txt",date));
 	if(!file_w.is_open()){return 0;}
 	if( file_w.is_open()){
+file_w << "total W+Jets events: " << totalEvents << endl; 
 file_w << "starts with 0 < MT2 <= 10, and goes on increments of 10 geV; " << endl;
 file_w << mt2_0_counter   *scale_1fb()*5.2 << endl;
 file_w << mt2_10_counter  *scale_1fb()*5.2 << endl;
@@ -645,6 +728,7 @@ else if (file_count == 2){
 ofstream file_t(Form("/home/users/sanil/single/%shists/lep30ttbar_mt2_bin.txt",date));
 	if(!file_t.is_open()){return 0;}
 	if( file_t.is_open()){
+file_d << "total tt~ events: " << totalEvents << endl; 
 file_t << "starts with 0 < MT2 <= 10, and goes on increments of 10 geV; " << endl;
 file_t << mt2_0_counter  *scale_1fb()*5.2 << endl;
 file_t << mt2_10_counter *scale_1fb()*5.2 << endl;
