@@ -69,7 +69,7 @@ int met_n_bin = 45;
 int jet_n_bin = 10;
 int jet_h_bin = 10;
 
-	TH1F   *fake_w_pt_h = new TH1F("fake_w_pt_","fake_W_pt",60,0,mt_h_bin);
+	TH1F   *fake_wpt_h = new TH1F("fake_w_pt_","fake_W_pt",50,0,100);
 	TH1F   *landau_h = new TH1F("landau_h_","landau_H",60,0,mt_h_bin);
 	TH1F   *gammaM_h = new TH1F("gammaM_","gamma",120,1,6);
 
@@ -225,24 +225,34 @@ float mt2_0_counter = 0, //0 bin counter
 	//COUNTERS
 	int el_count = 0, mu_count = 0, nJets = 0, nBtags = 0, good_index = -1, mu_index = -1, el_index = -1;
 
+      float metx = met() * cos( metPhi() );
+      float mety = met() * sin( metPhi() );
 
 ///metPhi correction//
 
-      float metx = met() * cos( metPhi() );
-      float mety = met() * sin( metPhi() );
+      float cmetx = met() * cos( metPhi() );
+      float cmety = met() * sin( metPhi() );
       float shiftx = 0.;
       float shifty = 0.;
 
       shiftx = (! isRealData()) ? (0.1166 + 0.0200*nvtxs()) : (0.2661 + 0.3217*nvtxs());
       shifty = (! isRealData()) ? (0.2764 - 0.1280*nvtxs()) : (-0.2251 - 0.1747*nvtxs());
 
-      metx -= shiftx;
-      mety -= shifty;
+      cmetx -= shiftx;
+      cmety -= shifty;
 
-      float cmet = sqrt( metx*metx + mety*mety ); // cmet == corrected met
+      float cmet = sqrt( cmetx*cmetx + cmety*cmety ); // cmet == corrected met
       float cmetphi = atan2( mety , metx );
 LorentzVector met_vec;
 met_vec.SetPxPyPzE(metx,mety,0,0);
+
+float lepy = lr_p4().py();
+float lepx = lr_p4().px();
+
+float w_x = sqrt ( metx*metx + lepx*lepx );
+float w_y = sqrt ( mety*mety + lepy*lepy );
+
+float w_pt_ = sqrt (w_x*w_x + w_y*w_y); 
 //jet looper
       for (unsigned int k = 0; k < jets_p4().size(); k++){
         if (jets_p4().at(k).pt()*jets_p4Correction().at(k) < 30) continue;
@@ -258,19 +268,23 @@ met_vec.SetPxPyPzE(metx,mety,0,0);
 //Event Requirements
 //muon eta > 2.1
 //electron eta > 2.4
-if(lr_p4().pt() < 50) continue;
+if(lr_p4().pt() < 30) continue;
 if(nJets < 2) continue;
 if(nBtags != 0) continue;
 if(cmet < 40 ) continue;
 //Event Requirements
 
 //TRIGGER WEIGH//
-if(abs(lr_id()) == 13) 	    lepton_weight = electronTriggerWeight(lr_p4().pt(),lr_p4().eta());
-else if(abs(lr_id()) == 11) lepton_weight = muonTriggerWeight(lr_p4().pt(),lr_p4().eta());
+if(abs(lr_id()) == 13){
+lepton_weight = electronTriggerWeight(lr_p4().pt(),lr_p4().eta());
+}
+else if(abs(lr_id()) == 11){ 
+lepton_weight = muonTriggerWeight(lr_p4().pt(),lr_p4().eta());
+}
 
-float w_pt_ = (lr_p4() + met_vec).pt();
+//float w_pt_ = (lr_p4() + met_vec).pt();
 
-//W_pt, met, jets FILL
+//met FILL
 if(file_count == 1){
 met_data->Fill(cmet);
 	if (abs(lr_id()) == 13){
@@ -309,8 +323,10 @@ float a[2];
 float gammaM;
 	//random w momentum from the histogram
 	//w_p = d.Landau(95.0291,10.3062);
+float rand_pt = d.Landau(40.5,17);
 
-	w_p = 30;
+	w_p = rand_pt;
+
 	ry.RndmArray(2,b);
 	xw = b[0];
 	yw = b[1];
@@ -380,6 +396,8 @@ float gammaM;
 	LorentzVector new_met;
 	new_met = real_met + fake_met;
 ///////////////  END FAKE   ////////////////////////////////////
+float fake_W_pt = (fake_lep+fake_met).pt();
+if(file_count == 1) fake_wpt_h->Fill(fake_W_pt);
 /*
 		\\\~*~*~*~\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\|||||/////////////////////////////////////~*~*~*~///
 		///~*~*~*~///////////////////////////////////////|||||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\~*~*~*~\\\
@@ -393,7 +411,7 @@ float MT = sqrt(2 * lr_p4().pt() * cmet *(1 - cos(dphi)));
 
 double mt2_event = MT2(new_met.Pt(),new_met.Phi(), lr_p4(), fake_lep);
 ////////  MT2 //////
-if(isRealData){
+if(file_count == 1){
 if(mt2_event == 0)				  mt2_0_counter+=1;
 else if(0 < mt2_event && mt2_event <= 10)	 mt2_10_counter+=1; 
 else if(10 < mt2_event && mt2_event <= 20)	 mt2_20_counter+=1; 
@@ -418,7 +436,7 @@ else if(190 < mt2_event && mt2_event <= 200)	mt2_200_counter+=1;
 else if( mt2_event > 200)		       mt2_G200_counter+=1;
 	} //data
 
-else if(!isRealData){ //for monte carlo with trigger weights
+if(file_count == 2 || file_count == 3){
 if(mt2_event == 0)			   	  mt2_0_counter += 1*lepton_weight;
 else if(0 < mt2_event && mt2_event <= 10)	 mt2_10_counter += 1*lepton_weight; 
 else if(10 < mt2_event && mt2_event <= 20)	 mt2_20_counter += 1*lepton_weight; 
@@ -443,8 +461,6 @@ else if(190 < mt2_event && mt2_event <= 200)	mt2_200_counter += 1*lepton_weight;
 else if( mt2_event > 200)		       mt2_G200_counter += 1*lepton_weight;
 	} //MC 
 ////////  MT2 //////
-
-float rand_pt = d.Landau(95,10);
 float lep_pt = lr_p4().pt();
 
 ////////  FILL //////
@@ -496,11 +512,10 @@ if (abs(lr_id()) == 13){
 }
 	/////FILL END //////
 	}//event 
-
 ///////////////// write histograms ////////////
-char* date = "may28";
+char* date = "may30";
 if(file_count == 1){
-     TFile* fout = new TFile(Form("/home/users/sanil/single/%shists/data_sl5_bv_lep50.root",date),"RECREATE");
+     TFile* fout = new TFile(Form("/home/users/sanil/single/%shists/data_sl5_bv_lep30.root",date),"RECREATE");
 	mt2_h_data->Write();
 	mt_h_data->Write();
 	met_data->Write();
@@ -520,7 +535,7 @@ if(file_count == 1){
   fout->Close();
 }
 else if(file_count == 2){
-    TFile* fout = new TFile(Form("/home/users/sanil/single/%shists/ttbar_sl5_bv_lep50.root",date),"RECREATE");
+    TFile* fout = new TFile(Form("/home/users/sanil/single/%shists/ttbar_sl5_bv_lep30.root",date),"RECREATE");
 	mt2_h_ttbar->Write();
 	 mt_h_ttbar->Write();
 	  met_ttbar->Write();
@@ -541,7 +556,7 @@ else if(file_count == 2){
 }
 else if(file_count == 3){
 	//TCanvas *c75 = new TCanvas("c75","c75");
-    TFile* fout = new TFile(Form("/home/users/sanil/single/%shists/wjets_sl5_bv_lep50.root",date),"RECREATE");
+    TFile* fout = new TFile(Form("/home/users/sanil/single/%shists/wjets_sl5_bv_lep30.root",date),"RECREATE");
 	mt2_h_wjets->Write();
 	 mt_h_wjets->Write();
 	  met_wjets->Write();
@@ -567,12 +582,11 @@ else if(file_count == 3){
 
 	///txt output///
 if(file_count == 1){
-ofstream file_d(Form("/home/users/sanil/single/%shists/mt2_data_bin_lep50.txt",date));
+ofstream file_d(Form("/home/users/sanil/single/%shists/lep30data_mt2_bin.txt",date));
 	if(!file_d.is_open()){return 0;}
 	if( file_d.is_open()){
-file_d << "0 bin: "<< mt2_0_counter   << endl;
-file_d << endl;
 file_d << "starts with 0 < MT2 <= 10, and goes on increments of 10 geV; " << endl;
+file_d << mt2_0_counter   << endl;
 file_d << mt2_10_counter  << endl;
 file_d << mt2_20_counter  << endl;
 file_d << mt2_30_counter  << endl;
@@ -593,17 +607,16 @@ file_d << mt2_170_counter << endl;
 file_d << mt2_180_counter << endl;
 file_d << mt2_190_counter << endl;
 file_d << mt2_200_counter << endl;
-file_d << "MT2 > 200: " << endl;
 file_d << mt2_G200_counter << endl;
+file_d << "^^^ MT2 > 200: " << endl;
 	}
 }
 else if (file_count == 3){
-ofstream file_w(Form("/home/users/sanil/single/%shists/mt2_wjets_bin_lep50.txt",date));
+ofstream file_w(Form("/home/users/sanil/single/%shists/lep30wjets_mt2_bin.txt",date));
 	if(!file_w.is_open()){return 0;}
 	if( file_w.is_open()){
-file_w << "0 bin: "<< mt2_0_counter*scale_1fb()*5.2   << endl;
-file_w << endl;
 file_w << "starts with 0 < MT2 <= 10, and goes on increments of 10 geV; " << endl;
+file_w << mt2_0_counter   *scale_1fb()*5.2 << endl;
 file_w << mt2_10_counter  *scale_1fb()*5.2 << endl;
 file_w << mt2_20_counter  *scale_1fb()*5.2 << endl;
 file_w << mt2_30_counter  *scale_1fb()*5.2 << endl;
@@ -624,17 +637,16 @@ file_w << mt2_170_counter *scale_1fb()*5.2 << endl;
 file_w << mt2_180_counter *scale_1fb()*5.2 << endl;
 file_w << mt2_190_counter *scale_1fb()*5.2 << endl;
 file_w << mt2_200_counter *scale_1fb()*5.2 << endl;
-file_w << "MT2 > 200: " << endl;
 file_w << mt2_G200_counter*scale_1fb()*5.2 << endl;
+file_w << "^^^ MT2 > 200 ^^^" << endl;
 	}
 }
 else if (file_count == 2){
-ofstream file_t(Form("/home/users/sanil/single/%shists/mt2_ttbar_bin_lep50.txt",date));
+ofstream file_t(Form("/home/users/sanil/single/%shists/lep30ttbar_mt2_bin.txt",date));
 	if(!file_t.is_open()){return 0;}
 	if( file_t.is_open()){
-file_t << "0 bin: "<< mt2_0_counter*scale_1fb()*5.2   << endl;
-file_t << endl;
 file_t << "starts with 0 < MT2 <= 10, and goes on increments of 10 geV; " << endl;
+file_t << mt2_0_counter  *scale_1fb()*5.2 << endl;
 file_t << mt2_10_counter *scale_1fb()*5.2 << endl;
 file_t << mt2_20_counter *scale_1fb()*5.2 << endl;
 file_t << mt2_30_counter *scale_1fb()*5.2 << endl;
@@ -655,8 +667,8 @@ file_t << mt2_170_counter*scale_1fb()*5.2 << endl;
 file_t << mt2_180_counter*scale_1fb()*5.2 << endl;
 file_t << mt2_190_counter*scale_1fb()*5.2 << endl;
 file_t << mt2_200_counter*scale_1fb()*5.2 << endl;
-file_t << "MT2 > 200: " << endl;
 file_t << mt2_G200_counter*scale_1fb()*5.2 << endl;
+file_t << "^^^ MT2 > 200 ^^^" << endl;
 	}
 	///txt output end///
 }
@@ -669,6 +681,7 @@ file_t << mt2_G200_counter*scale_1fb()*5.2 << endl;
 
 	file_count++;
   }	//file_loop
+fake_wpt_h->Draw();
 
   if ( nEventsChain != nEventsTotal ) {
     cout << Form( "ERROR: number of events from files (%d) is not equal to total number of events (%d)", nEventsChain, nEventsTotal ) << endl;
